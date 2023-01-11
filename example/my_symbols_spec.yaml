@@ -1,0 +1,36 @@
+# Specify the family name of the font to be generated.
+# This is also the name of generated Dart class.
+family: MySymbols
+
+# Specify where to save the output files (relative to the project root dirctory).
+output:
+  flutter: lib/src/my_symbols.dart
+  font: assets/my_symbols.ttf
+
+# This section is optional.
+default:
+  # Overrides the default parameters with the following.
+  style: rounded
+  weight: 500
+  size: 24px
+
+# Lists your symbols here.
+symbols:
+  # key:    An identifier to be used as the name
+  #         of a class member of type IconData in generated Dart class.
+  # value: The name of a material symbol. See available names
+  #        here [https://fonts.google.com/icons].
+  home: Home
+  home_focused:
+    # The following parameters are only applied to "home_focused".
+    name: Home # "name" filed is rquired
+    fill: true
+
+  # You can easily create variants of a symbol with different identifiers.
+  love: Favorite # Outlined heart icon
+  loved: # Also heart icon but filled
+    name: Favorite
+    fill: true
+
+  # You can't use "18_up_rating" as an identifer because that's not vaild in Dart.
+  eightteen_up_rating: 18 Up Rating
