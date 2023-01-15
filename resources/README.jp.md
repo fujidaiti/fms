@@ -38,7 +38,7 @@ MaterialDesignの最新版である[Material3](https://m3.material.io)では、�
       - [build](#build)
         - [複数のアイコンフォントを生成する](#複数のアイコンフォントを生成する)
       - [clean](#clean)
-  - [Future works](#future-works)
+  - [Todo](#Todo)
 
 
 ## Preface
@@ -331,11 +331,11 @@ $ flutter pub run fms clean
 
 
 
-## Future works
+## Todo
 
 - [ ] `verbose`オプションを実装する
 - [ ] リモートのリポジトリの代わりに、`clone`したローカルのリポジトリを使用するオプション（オフラインでも利用できるように）
 - [ ] YAMLのアンカー、エイリアス等に対応する
 - [ ] `pub global activate`でグローバルインストールした場合でもキャッシュがちゃんと働くか確認する
-- [ ] テストを書く
-- [ ] 英語のREADME.mdを用意する
+- [ ] テストをちゃんと書く
+- [ ] 設定ファイルのlinterを作る（VSCode plugin?）
