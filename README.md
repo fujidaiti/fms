@@ -14,21 +14,26 @@ An simple CLI tool that brings Google's [Material Symbols](https://m3.material.i
 
 ## Motivation
 
-In the latest version of MaterialDesign, [Material3](https://m3.material.io), [Material Symbols](https://m3.material.io/styles/icons/overview) was introduced in place of [Material Icons](https://m2.material.io/design/iconography/system-icons.html). However, Flutter does not yet support Material Symbols officially. Although they are [being supported](https://github.com/flutter/flutter/issues/102560), it will be some time before being bundled in the Stable version.
+In the latest version of MaterialDesign, [Material3](https://m3.material.io), [Material Symbols](https://m3.material.io/styles/icons/overview) was introduced in place of [Material Icons](https://m2.material.io/design/iconography/system-icons.html). However, Flutter does not yet support Material Symbols officially. Although they are [being supported](https://github.com/flutter/flutter/issues/102560), it will be some time before being bundled in the stable version.
 
 Fortunately, Material Symbols is OSS and all the resources are [available on Github](https://github.com/google/material-design-icons). You can also see a list of available symbols on [their official website](https://fonts.google.com/icons). You can incorporate Material Symbols into your Flutter project right away by downloading the SVG files of the symbols you need from the website.
 
 On the other hand, Material Icons are provided by the Flutter Framework as `Icons` class and can be used as easily and type-safty as `Icons.home`. How can we achieve the same thing with Material Symbols? First download the SVGs, convert them to a font file, then create a corresponding Dart wrapper class, and.... Yes, this is a very tedious process.
 
-With **fms (Flutter-Material-Symbols)** you can automatically generate these files from a single configuration file. There is no need to download and manage resources manually.
+With **fms (flutter-material-symbols)** you can automatically generate these files from a single configuration file. There is no need to download and manage resources manually.
 
 
+
+### Why "generate"?
+
+Why does fms take the trouble to generate font files instead of providing a class like `Icons` ? Material symbols has 2400+ icons and they are all customizable with 5 parameters. In addition, each parameter has at least 2 possible values. Therefore It is obvious that the number of possible combinations of the symbols and the parameters is enormous. If we create a class wchich provides all the variants of symbols as static member variables, a huge font file that contains all variant data must be included in the package. That's inpractical. Instead, fms generates a font file that contians only as much data as we needed.
 
 
 ## Index
 
 - [fms (Flutter-Material-Symbols)](#fms-flutter-material-symbols)
   - [Motivation](#motivation)
+    - [Why "generate"?](#Why "generate"?)
   - [Index](#index)
   - [Preface](#preface)
   - [Install](#install)
