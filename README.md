@@ -26,7 +26,7 @@ With **fms (flutter-material-symbols)** you can automatically generate these fil
 
 ### Why "generate"?
 
-Why does fms take the trouble to generate font files instead of providing a class like `Icons` ? Material symbols has 2400+ icons and they are all customizable with 5 parameters. In addition, each parameter has at least 2 possible values. Therefore It is obvious that the number of possible combinations of the symbols and the parameters is enormous. If we create a class wchich provides all the variants of symbols as static member variables, a huge font file that contains all variant data must be included in the package. That's inpractical. Instead, fms generates a font file that contians only as much data as we needed.
+Why does fms take the trouble to generate font files instead of providing a class like `Icons` ? Material symbols has 2400+ icons and they are all customizable with 5 parameters. In addition, each parameter has at least 2 possible values. Therefore It is obvious that the number of possible combinations of the symbols and the parameters is enormous. If we create a class wchich provides all the variants of symbols as static member variables, a huge font file that contains all variant data must be included in the package. That's inpractical. Instead, fms generates a font file that contians only as much data as you needed.
 
 
 ## Index
