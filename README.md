@@ -194,9 +194,11 @@ output:
 In `symbols:` section, you can define symbol instances: the instances of the symbols you want to use. A symbol instance is a set of the name of a symbol and its parameters. Every instance also has a unique identifier within the family.
 
 - Symbol Name
+
   Every symbol has a unique name (e.g. `Home`, `Calendar Month`). Available symbol names can be found in the [official gallery site](https://fonts.google.com/icons). Be careful about case, whitespaces, etc. (e.g. `calendarMonth` is wrong,  `Calendar Month` is correct).
   
 - Parameters
+
   Material Symbols are [variable fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide). Each symbol can be customized by adjusting five parameters. See the [offcial site](https://fonts.google.com/icons) to see how each parameter works.
   
 - Identifier
