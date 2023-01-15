@@ -33,7 +33,7 @@ Why does fms take the trouble to generate font files instead of providing a clas
 
 - [fms (Flutter-Material-Symbols)](#fms-flutter-material-symbols)
   - [Motivation](#motivation)
-    - [Why "generate"?](#Why "generate"?)
+    - [Why "generate"?](#why-generate)
   - [Index](#index)
   - [Preface](#preface)
   - [Install](#install)
