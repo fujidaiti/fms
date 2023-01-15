@@ -1,18 +1,28 @@
 # fms (Flutter-Material-Symbols)
 
-Googleの[Material Symbols](https://m3.material.io/styles/icons/overview)をFlutterプロジェクトで簡単に利用できるようにするCLIツールです。設定ファイルからアイコンフォントとそのラッパークラスを生成します。
+[English](https://github.com/fujidaiti/fms/blob/master/README.md)|[日本語](https://github.com/fujidaiti/fms/blob/master/resources/README.jp.md)
+
+![Pub Version](https://img.shields.io/pub/v/fms)
+
+[![cover](https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fl1dshu8o-adjustable_attributes_1.gif?alt=media&token=3e4384c6-b15a-4654-8250-ae61f38f8533)](https://m3.material.io/styles/icons/overview#8a94b4ec-c2c5-4dc7-b392-9f89b75904bd)
+
+
+
+An simple CLI tool that brings Google's [Material Symbols](https://m3.material.io/styles/icons/overview) to your Flutter projects. It generates an icon font and its wrapper class from a single configuration file.
 
 
 
 ## Motivation
 
-MaterialDesignの最新版である[Material3](https://m3.material.io)では、これまでの[Material Icons](https://m2.material.io/design/iconography/system-icons.html)（以下、**Icons**）に代わり[Material Symbols](https://m3.material.io/styles/icons/overview)（以下、**Symbols**）が新たに導入されました。しかし、現在のところFlutterはまだ公式にSymbolsをサポートしていません。[対応中](https://github.com/flutter/flutter/issues/102560)ではあるものの、Stableバージョンに導入されるのはまだ先になりそうです。
+In the latest version of MaterialDesign, [Material3](https://m3.material.io), [Material Symbols](https://m3.material.io/styles/icons/overview) was introduced in place of [Material Icons](https://m2.material.io/design/iconography/system-icons.html). However, Flutter does not yet support Material Symbols officially. Although they are [being supported](https://github.com/flutter/flutter/issues/102560), it will be some time before being bundled in the Stable version.
 
-幸いなことにSymbolsはOSSであり、全てのリソースがGithub上で[公開](https://github.com/google/material-design-icons)されています。また[公式サイト](https://fonts.google.com/icons)では利用可能なシンボルの一覧を見ることができます。必要なシンボルの`*.svg`や`*.png`をここからダウンロードすれば今すぐにSymbolsをFlutterプロジェクトに組み込むことが可能です。
+Fortunately, Material Symbols is OSS and all the resources are [available on Github](https://github.com/google/material-design-icons). You can also see a list of available symbols on [their official website](https://fonts.google.com/icons). You can incorporate Material Symbols into your Flutter project right away by downloading the SVG files of the symbols you need from the website.
 
-一方でIconsは[`Icons`クラス](https://api.flutter.dev/flutter/material/Icons-class.html)としてFlutter Frameworkから提供されており、`Icons.home`のように簡単に、タイプセーフに利用することができます。Symbolsで同じことを実現するためには、ダウンロードしたリソースをフォントファイルをに変換し、それに対応するDartのラッパークラスを作成する必要があり…。はい、これは大変面倒な作業です。
+On the other hand, Material Icons are provided by the Flutter Framework as `Icons` class and can be used as easily and type-safty as `Icons.home`. How can we achieve the same thing with Material Symbols? First download the SVGs, convert them to a font file, then create a corresponding Dart wrapper class, and.... Yes, this is a very tedious process.
 
-`fms (Flutter-Material-Symbols)`を使えば１つの設定ファイルからこれらのファイルを自動で生成することができます。リソースのダウンロード・管理を手動でする必要はありません。
+With **fms (Flutter-Material-Symbols)** you can automatically generate these files from a single configuration file. There is no need to download and manage resources manually.
+
+
 
 
 ## Index
@@ -24,41 +34,38 @@ MaterialDesignの最新版である[Material3](https://m3.material.io)では、�
   - [Install](#install)
   - [Getting started](#getting-started)
   - [How to use](#how-to-use)
-    - [設定ファイルの書き方](#設定ファイルの書き方)
-      - [ファミリー名](#ファミリー名)
-      - [出力先の設定](#出力先の設定)
-      - [シンボルインスタンスの定義](#シンボルインスタンスの定義)
-      - [デフォルトパラメータのオーバーライド](#デフォルトパラメータのオーバーライド)
-    - [コマンド](#コマンド)
+    - [Syntax of configuration file](#syntax-of-configuration-file)
+      - [Family Name](#family-name)
+      - [Output destinations](#output-destinations)
+      - [Define symbol instances](#define-symbol-instances)
+      - [Overrides default parameters](#overrides-default-parameters)
+    - [Commands](#commands)
       - [build](#build)
-        - [複数のアイコンフォントを生成する](#複数のアイコンフォントを生成する)
+        - [Generate multiple icon fonts](#generate-multiple-icon-fonts)
       - [clean](#clean)
-  - [Future works](#future-works)
+  - [Contribution](#contribution)
 
 
 ## Preface
 
-このパッケージの主要な機能の1つは以下のパッケージを利用して実現されています。
+One of the main functions of this package is heavily based on the following packages:
 
 - [fantasticon](https://github.com/tancredi/fantasticon)
-
-  `*svg`ファイルをアイコンフォントに変換するNode.jsパッケージです。シンボルの`*.svg`からアイコンフォントを生成するのに使用してます。そのためバージョン11以降の[Node.js](https://nodejs.org/en/download/)が有効になってる必要があります。
-
+  A node.js package that converts multiple SVG files into a single icon font. It is used to generate an icon fonts from SVGs of symbols. Therefore,  node.js of version 11 or later must be enabled.
 - [icon_font_generator](https://github.com/ScerIO/icon_font_generator)
-
-  `fantasticon`のDart向けラッパーライブラリです。アイコンフォントのラッパークラスを生成するために使用しています。
+  Wrapper library for fantasticon's Dart. It is used to generate icon font wrapper classes.
 
 
 
 ## Install
 
-`pub`コマンドでPub.devからインストールできます。
+You can install fms from [Pub.dev](https://pub.dev/packages/fms) using `pub` command.
 
 ```shell
 $ flutter pub add --dev fms
 ```
 
-また、バージョン11以降のNode.jsがインストールされていることも確認してください。
+Make sure that node.js of version 11 or later is installed.
 
 ```shell
 $ node --version   
@@ -69,7 +76,7 @@ v18.12.1
 
 ## Getting started
 
-1. 設定ファイルを書く
+1. Write a configuration file
 
    ```yaml
    # project_root/my_symbols.yaml
@@ -89,9 +96,9 @@ v18.12.1
 
    
 
-2. アイコンフォントとラッパークラスを生成
+2. Generate an Icon font and its wrapper class
 
-   以下のコマンドで`assets/my_symbols.ttf`にアイコンフォントが、`lib/src/my_symbols.dart`にラッパークラスがそれぞれ作成されます。
+   The following command generates an icon font in `assets/my_symbols.ttf` and its wrapper class in `lib/src/my_symbols.dart`.
 
    ```shell
    $ flutter pub run fms build my_symbols.yaml
@@ -99,9 +106,9 @@ v18.12.1
 
    
 
-3. アイコンフォントの情報を`pubspec.yaml`に追加
+3. Add generated icon font to your Flutter project
 
-   生成された`my_symbols.ttf`をFlutterが認識できるようにします。フォントファイルを`lib/`以外の場所（例えば`assets/`）に置く場合は`assets:`セクションで[アセットに追加する](https://docs.flutter.dev/development/ui/assets-and-images#specifying-assets)ことも忘れないでください。
+   Add the information of the generated font to `pubspec.yaml` so that Flutter can use it. Don't forget to also add the font file to your assets in the `assets:` section if you put them somewhere other than `lib/` (e.g. `assets/`).
 
    ```yaml
    ...
@@ -117,9 +124,9 @@ v18.12.1
 
 
 
-4. 生成されたアイコンを使う
+4. Use generated icons
 
-   各アイコンは`my_symbols.dart`で定義された`MySymbols`クラスから利用できます。
+   You can use the icons in Dart code via `MySymbols` class which is defined in generated `my_symbols.dart`.
 
    ```dart
    import 'package:your_package/src/my_symbols.dart';
@@ -139,32 +146,30 @@ v18.12.1
 
 
 
-### 設定ファイルの書き方
+### Syntax of configuration file
 
-`fms`の設定ファイルはYAMLで記述します。１つの設定ファイルが1つのアイコンフォント、ラッパークラスにそれぞれ対応します。
+A configuration file is written in YAML. One configuration file corresponds to one icon font and its wrapper class, respectively.
 
-
-
-設定ファイルは以下の４つのセクションから構成されています。
+A configuration file consists of the following four sections:
 
 ```yaml
-family: ... # ファミリー名
-output: ... # 出力先の設定
-symbols: ... # シンボルインスタンスの定義
-default: ... # デフォルトパラメータのオーバーライド（optional）
+family: ... # Family name
+output: ... # Output destinations
+symbols: ... # Define symbol instances
+default: ... # Overrides default parameters（optional）
 ```
 
 
 
-#### ファミリー名
+#### Family Name
 
-`family:`セクションでは生成されるアイコンフォントのファミリー名を指定します。
+In `family:` section, specify the family name of an icon font to be generated.
 
 ```yaml
 family: MySymbols
 ```
 
-これはラッパークラスの名前にも使用されるため、Dartのクラス名として適切なものである必要があります（通常はUpperCamelCase）。したがって以下のように数字から始まる名前、特殊文字やスペースの入った名前は使用できません。
+This is also used as the name of the wrapper class, so it must be an appropriate identifier in Dart (usually UpperCamelCase). Therefore names that begin with a number, or contain special characters, or spaces cannot be used, as shown below:
 
 - `10Symbols` 
 - `MySymbols#1`
@@ -172,51 +177,43 @@ family: MySymbols
 
 
 
-#### 出力先の設定
+#### Output destinations
 
-生成されるアイコンフォントとラッパークラスの出力先は`output:`セクションで指定します。
+The output destinations for a generated icon font and its wrapper class is specified in `output:` section.
 
 ```yaml
 output:
-  flutter: lib/src/my_symbols.dart # Dartファイル
-  font: assets/my_symbols.ttf # フォントファイル
+  flutter: lib/src/my_symbols.dart # Wrapper class
+  font: assets/my_symbols.ttf # Icon font
 ```
 
 
 
-#### シンボルインスタンスの定義
+#### Define symbol instances
 
-`symbols:`セクションでは使用したいシンボルのインスタンス（シンボルインスタンス）を定義します。シンボルインスタンスとはシンボル名と5つのパラメータの組です。また全てのインスタンスはファミリー内で一意な識別子を持ちます。
+In `symbols:` section, you can define symbol instances: the instances of the symbols you want to use. A symbol instance is a set of the name of a symbol and its parameters. Every instance also has a unique identifier within the family.
 
-
-
-- シンボル名
-
-  全てのシンボルには一意な名前が付けられています（例：`Home`、`Calendar Month`）。利用可能なシンボル名は公式の[ギャラリーサイト](https://fonts.google.com/icons)で確認できます。大文字や小文字、空白の有無など表記揺れに注意してください（例：`calendarMonth`は間違い、正しくは`Calendar Month`）。
-
+- Symbol Name
+  Every symbol has a unique name (e.g. `Home`, `Calendar Month`). Available symbol names can be found in the [official gallery site](https://fonts.google.com/icons). Be careful about case, whitespaces, etc. (e.g. `calendarMonth` is wrong,  `Calendar Month` is correct).
   
-
-- パラメータ
-
-  Symbolsは可変フォントです。各シンボルは[5つのパラメータ](https://m3.material.io/styles/icons/overview#4463117e-084c-40e3-ba99-83ddf2faba30)を持っており、これらを調整することで様々なバリエーションのシンボルを作成することができます。各パラメータがどのように作用するかは[ここ](https://fonts.google.com/icons)で確認してください。
-
+- Parameters
+  Material Symbols are [variable fonts](https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Fonts/Variable_Fonts_Guide). Each symbol can be customized by adjusting five parameters. See the [offcial site](https://fonts.google.com/icons) to see how each parameter works.
   
-
-- 識別子
-
-  定義したシンボルインスタンスをFlutterプロジェクト内で参照するための識別子です。この識別子は生成されるラッパークラスの変数名になるため、Dartの識別子として適切なものである必要があります。`fms`ではsnake_caseとlowerCamelCaseがサポートされていますが、2つのスタイルを混在させることはできません。また識別子はファミリー内で一意でなければなりません。
-
+- Identifier
+  
+  Each instance also has an identifier which is unique in thier family. This will be the variable name of the generated wrapper class, so it must be an appropriate identifier for Dart. fms supports both snake_case and lowerCamelCase, but the two styles cannot be mixed in a family. 
 
 
-まずはパラメータを指定しないシンプルな例を示します。ここでは`Home`シンボルのインスタンスを定義し`home`という識別子を割り当てています。シンボル名は`name:`セクションで指定します。
+
+Let's start with a simple example. The following snippet defines an instance of `Home` symbol and name it as `home`. The symbol name is specified in the `name:` section.
 
 ```yaml
 symbols:
-  home: # 識別子
-    name: Home # シンボル名
+  home: # Identifier
+    name: Home # Symbol name
 ```
 
-次はパラメータを指定してみましょう。Symbolsでは**style**、**weight axis**、**fill axis**、**grade axis**、**optical-size axis**という5つのパラメータがサポートされています。
+Next, customize symbols with parameters. Material Symbols supports five parameters: **style**, **weight axis**, **fill axis**, **grade axis**, and **optical-size axis**.
 
 ```yaml
 symbols:
@@ -229,9 +226,9 @@ symbols:
     size: 48px # optical-size axis
 ```
 
-各パラメータセクションで指定可能な値は以下の通りです：
+The possible values for each parameter section are as follows:
 
-|パラメータ| セクション |               値               |
+|PARAMETER| SECTION |               VALUE               |
 |:---------| :----------- | :----------------------------- |
 |Style|   `style:`   | `outlined`, `rounded`, `sharp` |
 |Weight axis|  `weight:`   |   `100`, `200`, ... , `700`    |
@@ -239,22 +236,22 @@ symbols:
 |Grade Axis|   `grade:`   |        `-25`, `0`, `200`        |
 |Optical-size axis|   `size:`    |  `20px`, `24px`, `40px`, `48px`  |
 
-全てのパラメータは任意であり、省略可能です。指定がないパラメータにはデフォルトの値が設定されます。デフォルト値はそれぞれ`style: outlined`、`weight: 400`、`fill: false`、`grade: 0`、`size: 48px`です。以下は[NavigationBar](https://api.flutter.dev/flutter/material/NavigationBar-class.html)のタブで使用する2種類の`Home`シンボル（`home`と`home_selected`）を作成する例です。
+All of the parameters are optional and may be omitted. Parameters whose value is not specified will have the default values. The default values are `style: outlined`、`weight: 400`、`fill: false`、`grade: 0`、`size: 48px`, respectively. The following is an example of creating two different `Home` symbols (`home` and `home_selected`) to be used for tabs of [NavigationBar](https://api.flutter.dev/flutter/material/NavigationBar-class.html).
 
 ```yaml
 symbols:
-  home: # "fill: false"を指定した時と等価
+  home: # Equivalent to "fill: false"
     name: Home
   home_selected:
     name: Home
     fill: true
 ```
 
-また、パラメータを1つも指定しない場合は`name:`セクションも省略することができます。その場合はkey-value形式で識別子とシンボル名を記述してください。上記の例を省略形で書き直すと次のようになります。
+The `name:` section can also be omitted if none of the parameters are specified. In such a case, the identifier and symbol name should be written in key-value format. The above example can be rewritten in abbreviated form as follows:
 
 ```yaml
 symbols:
-  home: Home # 省略形
+  home: Home # "name:" section is ommited
   home_selected:
     name: Home
     fill: true
@@ -262,9 +259,9 @@ symbols:
 
 
 
-####  デフォルトパラメータのオーバーライド
+####  Overrides default parameters
 
-各パラメータのデフォルト値を変更したい時は`default:`セクションを利用してください。ここで指定したパラメータは新しいデフォルト値として使用されます。例えはstyleのデフォルト値を`outlined`から`rounded`に、weight axisのデフォルト値を`400`から`500`にそれぞれ変更したい場合は次のように書きます。
+Use `default:` section to overrides the default value of each parameter. The values specified here will be used as the new default parameters. For example, to change the default value of style from `outlined` to `rounded` and the default value of `weight axis` from `400` to `500`, write the following.
 
 ```yaml
 default:
@@ -272,43 +269,43 @@ default:
   weight: 500
 ```
 
-`default:`セクションは任意であり省略可能です。
+The `default:` section is optional and can be omitted.
 
 
 
-### コマンド
+### Commands
 
-fmsには`build`、`clean`という2つのサブコマンドがあります。
+fms has 2 subcommands: `build` and `clean`.
 
 #### build
 
-設定ファイルからアイコンフォントとそのラッパークラスを生成するには`build`コマンドを使用します。コマンドの動作にはNode.jsが必要ですので、ない場合は先にインストールしてください。
+Use `build` to generate an icon font and its wrapper class from a configuration file. Node.js is required for the command to work. If you do not have it, please install it first.
 
 ```shell
 $ flutter pub run fms build your_config_file.yaml
 ```
 
-利用可能なオプションは次の通りです。
+Available options are:
 
-- `--prefer-camel-case`
+- `--prefer-camel-case`.
 
-  シンボルインスタンスの識別子をlowerCamelCaseにします。指定がなければsnake_caseになります。
+  Use lowerCamelCase for identifiers of symbol instances instead of snake_case.
 
-- `-f`, `--force`
+- `-f`, `--force`.
 
-  キャッシュを無視してファイルをダウンロードします。
+  Download resource files even if the cache is available.
 
-- `--use-yarn`
+- `--use-yarn`.
 
-  Node.jsのパッケージマネージャとして`yarn`を使用します。指定がなければ`npm`が使用されます。
+  Use `yarn` as a node.js package manager instead of `npm`.
 
   
 
-##### 複数のアイコンフォントを生成する
+##### Generate multiple icon fonts
 
-1つの設定ファイルから1つのアイコンフォントが生成されます。複数種類のアイコンフォントを生成したい場合は設定ファイルもその数だけ用意してください。この時ファミリー名が重複しないように気を付けてください。
+One configuration file corresponds to one icon font and its wrapper class respectively. If you want to generate multiple icon fonts, write multiple configuration files too. Make sure that the family names must be unique within your project.
 
-`build`コマンドには設定ファイルを複数指定できるので、何度もコマンドを呼び出す必要はありません。
+You can pass multiple configuration files to build` command, so there is no need to call the command multiple times.
 
 ```shell
 $ flutter pub run fms first_symbols.yaml second_symbols.yaml
@@ -318,7 +315,7 @@ $ flutter pub run fms first_symbols.yaml second_symbols.yaml
 
 #### clean
 
-ダウンロードしたシンボルの`*.svg`ファイルは`.dart_tool/`内にキャッシュされます。これらを削除する場合は`clean`コマンドを使用してください。
+Downloaded SVG files are cached in `<project_root>/.dart_tool/`. Use the `clean` to delete them.
 
 ```shell
 $ flutter pub run fms clean
@@ -326,11 +323,6 @@ $ flutter pub run fms clean
 
 
 
-## Future works
+## Contribution
 
-- [ ] `verbose`オプションを実装する
-- [ ] リモートのリポジトリの代わりに、`clone`したローカルのリポジトリを使用するオプション（オフラインでも利用できるように）
-- [ ] YAMLのアンカー、エイリアス等に対応する
-- [ ] `pub global activate`でグローバルインストールした場合でもキャッシュがちゃんと働くか確認する
-- [ ] テストを書く
-- [ ] 英語のREADME.mdを用意する
+Any kind of contribution is welcome. Suggestions for my english are also helpful to improve the quality of the document.
