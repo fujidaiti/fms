@@ -307,7 +307,11 @@ $ flutter pub run fms build your_config_file.yaml
 
   Node.jsのパッケージマネージャとして`yarn`を使用します。指定がなければ`npm`が使用されます。
 
-  
+- `-v`, `--verbose`
+
+  プロセスの詳細な情報を表示します。
+
+
 
 ##### 複数のアイコンフォントを生成する
 
@@ -333,7 +337,7 @@ $ flutter pub run fms clean
 
 ## Todo
 
-- [ ] `verbose`オプションを実装する
+- [x] `verbose`オプションを実装する
 - [ ] リモートのリポジトリの代わりに、`clone`したローカルのリポジトリを使用するオプション（オフラインでも利用できるように）
 - [ ] YAMLのアンカー、エイリアス等に対応する
 - [ ] `pub global activate`でグローバルインストールした場合でもキャッシュがちゃんと働くか確認する

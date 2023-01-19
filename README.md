@@ -294,19 +294,22 @@ $ flutter pub run fms build your_config_file.yaml
 
 Available options are:
 
-- `--prefer-camel-case`.
+- `--prefer-camel-case`
 
   Use lowerCamelCase for identifiers of symbol instances instead of snake_case.
 
-- `-f`, `--force`.
+- `-f`, `--force`
 
   Download resource files even if the cache is available.
 
-- `--use-yarn`.
+- `--use-yarn`
 
   Use `yarn` as a node.js package manager instead of `npm`.
 
-  
+- `-v`,`--verbose`
+- Display detailed processing information.
+
+
 
 ##### Generate multiple icon fonts
 
