@@ -14,11 +14,11 @@ An simple CLI tool that brings Google's [Material Symbols](https://m3.material.i
 
 ## Motivation
 
-In the latest version of MaterialDesign, [Material3](https://m3.material.io), [Material Symbols](https://m3.material.io/styles/icons/overview) was introduced in place of [Material Icons](https://m2.material.io/design/iconography/system-icons.html). However, Flutter does not yet support Material Symbols officially. Although they are [being supported](https://github.com/flutter/flutter/issues/102560), it will be some time before being bundled in the stable version.
+In the latest version of MaterialDesign, [Material3](https://m3.material.io), [Material Symbols](https://m3.material.io/styles/icons/overview) was introduced in place of [Material Icons](https://m2.material.io/design/iconography/system-icons.html). However, flutter does not yet support Material Symbols officially. Although they are [being supported](https://github.com/flutter/flutter/issues/102560), it will be some time before being bundled in the stable version.
 
-Fortunately, Material Symbols is OSS and all the resources are [available on Github](https://github.com/google/material-design-icons). You can also see a list of available symbols on [their official website](https://fonts.google.com/icons). You can incorporate Material Symbols into your Flutter project right away by downloading the SVG files of the symbols you need from the website.
+Fortunately, Material Symbols is OSS and all the resources are [available on Github](https://github.com/google/material-design-icons). You can also see a list of available symbols on [their official website](https://fonts.google.com/icons). You can incorporate Material Symbols into your flutter project right away by downloading the SVG files of the symbols you need from the website.
 
-On the other hand, Material Icons are provided by the Flutter Framework as `Icons` class and can be used as easily and type-safty as `Icons.home`. How can we achieve the same thing with Material Symbols? First download the SVGs, convert them to a font file, then create a corresponding Dart wrapper class, and.... Yes, this is a very tedious process.
+On the other hand, Material Icons are provided in flutter framework as `Icons` class and we can use them as easily and type-safty as `Icons.home`. How can we achieve the same thing with Material Symbols? First download the SVGs, convert them to a font file, then create a corresponding Dart wrapper class, and.... Yes, this is a very tedious process.
 
 With **fms (flutter-material-symbols)** you can automatically generate these files from a single configuration file. There is no need to download and manage resources manually.
 
@@ -113,7 +113,7 @@ v18.12.1
 
 3. Add generated icon font to your Flutter project
 
-   Add the information of the generated font to `pubspec.yaml` so that Flutter can use it. Don't forget to also add the font file to your assets in the `assets:` section if you put them somewhere other than `lib/` (e.g. `assets/`).
+   Add the information of the generated font to `pubspec.yaml` so that Flutter can use it. Don't forget to specify the font file as an asset in the `assets:` section if you put them somewhere other than `lib/` (e.g. `assets/`).
 
    ```yaml
    ...
@@ -235,7 +235,7 @@ symbols:
 
 The possible values for each parameter section are as follows:
 
-|PARAMETER| SECTION |               VALUE               |
+|PARAMETER| SECTION |               POSSIBLE VALUES               |
 |:---------| :----------- | :----------------------------- |
 |Style|   `style:`   | `outlined`, `rounded`, `sharp` |
 |Weight axis|  `weight:`   |   `100`, `200`, ... , `700`    |
