@@ -1,6 +1,6 @@
 name: fms
 description: Brings Google's Material symbols to your flutter project.
-version: 0.9.0
+version: 0.9.1
 repository: https://github.com/fujidaiti/fms.git
 
 environment:
