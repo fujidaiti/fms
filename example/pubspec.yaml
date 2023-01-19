@@ -16,7 +16,7 @@ dev_dependencies:
     sdk: flutter
   flutter_lints: ^2.0.0
   fms:
-    path: "../../flutter-material-symbols"
+    path: "../../fms"
 
 flutter:
   uses-material-design: true
