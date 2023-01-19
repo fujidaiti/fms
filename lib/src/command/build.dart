@@ -127,5 +127,9 @@ void _showError(File file, Err error) {
     logger.stderr('Someting went wrong while processing ${file.path}!');
     logger.stderr('${error.error}');
     logger.trace('${error.stacktrace}');
+    if (!logger.isVerbose) {
+      logger.stderr(
+          'Try run again with --verbose option to see more detailed information.');
+    }
   }
 }
