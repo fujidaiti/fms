@@ -2,7 +2,7 @@
 
 [English](https://github.com/fujidaiti/fms/blob/master/README.md)|[日本語](https://github.com/fujidaiti/fms/blob/master/resources/README.jp.md)
 
-![Pub Version](https://img.shields.io/pub/v/fms)
+[![Pub Version](https://img.shields.io/pub/v/fms)](https://pub.dev/packages/fms)
 
 [![cover](https://firebasestorage.googleapis.com/v0/b/design-spec/o/projects%2Fm3%2Fimages%2Fl1dshu8o-adjustable_attributes_1.gif?alt=media&token=3e4384c6-b15a-4654-8250-ae61f38f8533)](https://m3.material.io/styles/icons/overview#8a94b4ec-c2c5-4dc7-b392-9f89b75904bd)
 
