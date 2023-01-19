@@ -307,7 +307,8 @@ Available options are:
   Use `yarn` as a node.js package manager instead of `npm`.
 
 - `-v`,`--verbose`
-- Display detailed processing information.
+
+  Display detailed processing information.
 
 
 
