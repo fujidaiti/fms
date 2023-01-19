@@ -25,6 +25,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:args/command_runner.dart';
+import 'package:fms/src/common/logger.dart';
 import 'package:icon_font_generator/generate_flutter_class.dart';
 import 'package:icon_font_generator/templates/npm_package.dart';
 import 'package:icon_font_generator/utils.dart';
@@ -125,6 +126,7 @@ class GenerateCommand extends Command {
 
     final npmPackage = File(path.join(genRootDir.path, 'package.json'));
     if (!npmPackage.existsSync()) {
+      logger.trace('Writing package.json for node.js...');
       await npmPackage.writeAsString(npmPackageTemplate);
     }
 
@@ -134,17 +136,27 @@ class GenerateCommand extends Command {
         Directory.fromUri(genRootDir.uri.resolve('temp_font'));
     final iconsMap = File(path.join(tempOutDirectory.path,
         path.basenameWithoutExtension(argResults!['out-font']) + '.json'));
+
+    logger.trace('Working directory: ${genRootDir.path}');
+    logger.trace('Source directory: ${genRootDir.path}');
+    logger.trace('Output directory: ${genRootDir.path}');
+    logger.trace('Working directory: ${genRootDir.path}');
+    logger.trace('Icons map file: ${iconsMap.path}');
+
     if (tempSourceDirectory.existsSync()) {
+      logger.trace('Deleting old source directory...');
       await tempSourceDirectory.delete(recursive: true);
     }
     if (tempOutDirectory.existsSync()) {
+      logger.trace('Deleting old output directory...');
       await tempOutDirectory.delete(recursive: true);
     }
     if (iconsMap.existsSync()) {
+      logger.trace('Deleting old icons map...');
       await iconsMap.delete();
     }
 
-    stdout.writeln('Installing npm dependencies...');
+    logger.stdout('Installing npm dependencies...');
 
     final nodeInstallDependencies = await Process.start(
       (argResults!['yarn'] as bool) ? 'yarn' : 'npm',

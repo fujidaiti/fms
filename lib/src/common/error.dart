@@ -14,7 +14,8 @@ class ParseErr extends Err {
 }
 
 class IOErr extends Err {
-  final String message;
+  final Object error;
+  final StackTrace stacktrace;
 
-  IOErr(this.message);
+  IOErr(this.error, this.stacktrace);
 }

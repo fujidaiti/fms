@@ -1,8 +1,8 @@
 import 'dart:io';
 
 import 'package:args/command_runner.dart';
-import 'package:cli_util/cli_logging.dart';
 import 'package:fms/src/common/io.dart' as io;
+import 'package:fms/src/common/logger.dart';
 import 'package:fms/src/common/types.dart';
 import 'package:fms/src/download/download.dart';
 import 'package:fms/src/common/error.dart';
@@ -39,6 +39,12 @@ class BuildCommand extends Command {
         'use-yarn',
         help: 'Use yarn instead of npm',
         negatable: false,
+      )
+      ..addFlag(
+        'verbose',
+        abbr: 'v',
+        help: 'Display detailed processing information',
+        negatable: false,
       );
   }
 
@@ -47,7 +53,10 @@ class BuildCommand extends Command {
     final force = argResults!['force'] as bool;
     final useCamelCase = argResults!['prefer-camel-case'] as bool;
     final useYarn = argResults!['use-yarn'] as bool;
+    final verbose = argResults!['verbose'] as bool;
     final configFilePaths = argResults!.rest;
+
+    initGlobalLogger(verbose);
 
     if (configFilePaths.isEmpty) {
       throw UsageException(
@@ -58,7 +67,7 @@ class BuildCommand extends Command {
 
     final build = (File config) {
       return _build(force, useCamelCase, useYarn, config)
-          .mapLeft(_showError.curry(Logger.standard())(config));
+          .mapLeft(_showError.curry(config));
     };
 
     await configFilePaths
@@ -106,16 +115,17 @@ TaskEither<Err, void> _generate(
         ],
         if (useYarn) 'yarn',
       ]),
-      (error, _) => IOErr('$error'),
+      IOErr.new,
     );
 
-void _showError(Logger logger, File file, Err error) {
+void _showError(File file, Err error) {
   if (error is ParseErr) {
     logger.stderr('Failed to parse the configuration file: ${file.path}');
     logger.stderr('Try correcting errors and run again.');
     logger.stderr(error.message);
   } else if (error is IOErr) {
     logger.stderr('Someting went wrong while processing ${file.path}!');
-    logger.stderr(error.message);
+    logger.stderr('${error.error}');
+    logger.trace('${error.stacktrace}');
   }
 }

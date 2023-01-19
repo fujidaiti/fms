@@ -9,10 +9,6 @@ Directory _getCacheDir() {
   final dartTool = segments[segments.length - 5];
   final packageName = segments[segments.length - 2];
   return Directory(p.join(dartTool, packageName));
-
-  // final dartTool = Platform.script.resolve('../../..');
-  // final packageName = p.basename(dartTool.resolve('..').path);
-  // return Directory(p.join(dartTool.path, packageName));
 }
 
 // ignore: unnecessary_late
