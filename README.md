@@ -1,6 +1,6 @@
 **⚠️ Notice - Jun. 17, 2023**
 
-This package has a critical problem that won't be fixed. I DO recommend to using [material_symbols_icons](https://github.com/timmaffett/material_symbols_icons) by @timmaffett instead, which is 100% compatible with the official API that will be released in a future release of Flutter. See [#3](https://github.com/fujidaiti/fms/issues/3#issuecomment-1595543721) for more information.
+This package has a critical problem that won't be fixed. I DO recommend using [material_symbols_icons](https://github.com/timmaffett/material_symbols_icons) by @timmaffett instead, which is 100% compatible with the official API that will be released in a future release of Flutter. See [#3](https://github.com/fujidaiti/fms/issues/3#issuecomment-1595543721) for more information.
 
 # fms (Flutter-Material-Symbols)
 
